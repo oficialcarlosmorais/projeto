@@ -1,6 +1,6 @@
 <?php
 include ("classes/DB.class.php");
-    class Cliente extends DB{
+    class Admin extends DB{
         private $id;
         private $nome;
         private $email;
@@ -8,7 +8,7 @@ include ("classes/DB.class.php");
 
         public function __construct($id=false){
             if($id){
-                $sql = "SELECT * FROM usuario WHERE id =  :id";
+                $sql = "SELECT * FROM admin WHERE id =  :id";
                 $stmt = DB::Conexao()->prepare($sql);
                 $stmt->bindParam(":id", $id, PDO::PARAM_INT);
                 $stmt->execute();
@@ -56,7 +56,7 @@ include ("classes/DB.class.php");
         }
 
         public static function selecionar($id){
-            $sql = "SELECT * FROM usuario WHERE id=$id";
+            $sql = "SELECT * FROM admin WHERE id=$id";
             $stmt = DB::conexao()->prepare($sql);
             $stmt->execute();
             $registros = $stmt->fetchALL(PDO::FETCH_ASSOC); 
@@ -65,7 +65,7 @@ include ("classes/DB.class.php");
                 $itens = array();
 
                 foreach($registros as $registro){
-                    $objTemporario = new Cliente();
+                    $objTemporario = new Admin();
                     $objTemporario->setId($registro['id']);
                     $objTemporario->setNome($registro['nome']);
                     $objTemporario->setEmail($registro['email']);
@@ -77,8 +77,9 @@ include ("classes/DB.class.php");
             }
             return false;
         }
+        
         public static function listar(){
-            $sql = "SELECT * FROM usuario";
+            $sql = "SELECT * FROM admin";
             $stmt = DB::conexao()->prepare($sql);
             $stmt->execute();
             $registros = $stmt->fetchALL(PDO::FETCH_ASSOC); 
@@ -87,7 +88,7 @@ include ("classes/DB.class.php");
                 $itens = array();
 
                 foreach($registros as $registro){
-                    $objTemporario = new Cliente();
+                    $objTemporario = new Admin();
                     $objTemporario->setId($registro['id']);
                     $objTemporario->setNome($registro['nome']);
                     $objTemporario->setEmail($registro['email']);
@@ -103,7 +104,7 @@ include ("classes/DB.class.php");
         public function adicionar(){
             try{
                 
-                $sql = "INSERT INTO usuario (nome, email, telefone )
+                $sql = "INSERT INTO admin (nome, email, telefone )
                 VALUES (:nome, :email, :telefone)";
 
                 $stmt = DB::conexao()->prepare($sql);
@@ -120,7 +121,7 @@ include ("classes/DB.class.php");
         public function atualizar(){
             if($this->id){
                 try{
-                    $sql = "UPDATE usuario SET
+                    $sql = "UPDATE admin SET
                             nome = :nome,
                             email = :email,
                             telefone = :telefone
@@ -141,7 +142,7 @@ include ("classes/DB.class.php");
         public function excluir(){
             if($this->id){
                 try{
-                    $sql = "DELETE FROM usuario WHERE id = :id";
+                    $sql = "DELETE FROM admin WHERE id = :id";
 
                     $stmt = DB::Conexao()->prepare($sql);
                     $stmt->bindParam(":id", $this->id);
